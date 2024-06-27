@@ -1,6 +1,10 @@
 # CB01
-Prova a creare un indice con cache di 300 pagine ( configurabile fino a 2k e oltre)
+ - Prova a creare un indice con cache di 300 pagine Movie ( configurabile fino a 2k e oltre)
+ - ottiene final url per stay-online
 
+###TODO 
+
+aggiungere series
 
 ## Dependencies
 
