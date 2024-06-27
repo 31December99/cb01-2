@@ -80,7 +80,7 @@ class Cb01(Page):
                 if link.get('target') == '_blank':
                     text = link.get_text()
                     if text.lower() in ['maxstream', 'mixdrop']:
-                        href = link.get('href')  # Ottenere l'attributo 'href' del link
+                        href = link.get('href')  # Ottengo href per maxstream o mixdrop
                         urls.append(href)
         return urls
 

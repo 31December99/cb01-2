@@ -46,13 +46,13 @@ class MyHttp:
     async def __aenter__(self):
         self.session = ClientSession(timeout=self.timeout, connector=TCPConnector(verify_ssl=False, limit=200),
                                      headers=self.headers)
-        self.load_cache()  # Carica la cache su disco nella cache in memoria
+        self.load_cache()
         return self
 
     async def __aexit__(self, exc_type, exc, tb):
         if self.session:
             await self.session.close()
-        self.save_cache()  # Salva la cache in memoria su disco
+        self.save_cache()
 
     def get_session(self):
         return self.session
