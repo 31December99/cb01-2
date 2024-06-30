@@ -9,6 +9,7 @@ import diskcache
 
 class Cache:
     """ Carico la cache in locale"""
+
     def __init__(self, cache_folder: str = './cache'):
         self.disk_cache = diskcache.Cache(cache_folder)
 
@@ -39,7 +40,7 @@ class MyHttp:
         self.session = None
         self.cache = cache
         self.headers = headers
-        self.semaphore = asyncio.Semaphore(200)  
+        self.semaphore = asyncio.Semaphore(200)
         self.memory_cache = SimpleMemoryCache(serializer=CustomJsonSerializer(), ttl=300)
         self.disk_cache = diskcache.Cache(cache_dir)
 
@@ -57,15 +58,20 @@ class MyHttp:
     def get_session(self):
         return self.session
 
-    async def get(self, url: str) -> str:
-        response = await self.session.get(url)
+    async def get(self, url: str, proxy=None) -> (str, str):
+        response = await self.session.get(url=url, proxy=proxy)
         # print(f"[cache {self.cache}] -> {url} [{response.status}]")
         if response.status == 200 and self.cache:
             body = await response.text()
             await self.memory_cache.set(url, body)
             return body
         elif response.status == 200:
-            return await response.text()
+            cookies = response.cookies
+            if cookies:
+                php_sess_id = cookies.get('PHPSESSID').value
+            else:
+                php_sess_id = ''
+            return await response.text(), php_sess_id
         else:
             return ''
 
