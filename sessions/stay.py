@@ -4,6 +4,9 @@ import requests
 
 
 class Stayonline:
+    """ Invece di premere il pulsante invio una richiesta con il token del capthca
+        e ottengo il link di stayonline protector
+    """
     # reCaptha2 token # todo scade ?
 
     result = {
