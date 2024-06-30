@@ -57,17 +57,24 @@ class MyHttp:
     def get_session(self):
         return self.session
 
-    async def get(self, url: str) -> bytes:
+    async def get(self, url: str) -> str:
         response = await self.session.get(url)
-        print(f"[cache {self.cache}] -> {url} [{response.status}]")
+        # print(f"[cache {self.cache}] -> {url} [{response.status}]")
         if response.status == 200 and self.cache:
-            body = await response.read()
+            body = await response.text()
             await self.memory_cache.set(url, body)
             return body
         elif response.status == 200:
-            return await response.read()
+            return await response.text()
         else:
-            return b''
+            return ''
+
+    async def get_content(self, url: str) -> str:
+        response = await self.session.get(url)
+        if response.status == 200:
+            return await response.text()
+        else:
+            return ''
 
     def save_cache(self):
         """ Passa dalla ram al disco """
