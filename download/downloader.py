@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import os
 from queue import Queue
+from urllib.parse import urlparse
+
 from .proxy import Proxy, MAX_THREAD
 
 
@@ -23,9 +25,13 @@ class Downloader:
         if not self.playlist:
             return
 
+        # Ottiene il nome del file da un url qualasiasi della lista
+        parsed_uri = urlparse(self.playlist[0]['url'])
+        self.file_name = parsed_uri.path.split('/')[-1]
+
         # Crea la cartella download in home/user
         home_folder = os.path.expanduser("~")
-        file_path = os.path.join(home_folder, "SC_Downloads", self.file_name, self.media)
+        file_path = os.path.join(home_folder, "CB01_Downloads", self.file_name, self.media)
 
         # Salva tutti i segments.uri in una coda safe-thread
         for index, items in enumerate(self.playlist):
