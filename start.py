@@ -45,7 +45,7 @@ async def start():
                 print("Url non disponibile")
                 sys.exit()
 
-        # Splitto il file in tre parti uno per proxy e passi i gli url delivery
+        # Splitto il file in n parti uno per proxy e passo gli url delivery
         # infine richiedo con HEAD il content-lenght e divido il size per il numero di parti richieste
         sp = Split(download_group[-1])
         headers_ranges = sp.get_ranges(parts=len(proxy_group), download_group=download_group,
