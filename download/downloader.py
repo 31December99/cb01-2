@@ -11,13 +11,12 @@ class Downloader:
         Crea i threads per il download
     """
 
-    def __init__(self, playlist: [], file_name: str, media: str, key=False):
+    def __init__(self, playlist: [], key=False):
         self.playlist: [] = playlist
         self.key: bool = key
         self.queue: Queue = Queue()
         self.threads: list = []
-        self.file_name: str = file_name
-        self.media: str = media
+        self.file_name: str = ''
 
     def start(self):
 
@@ -31,7 +30,7 @@ class Downloader:
 
         # Crea la cartella download in home/user
         home_folder = os.path.expanduser("~")
-        file_path = os.path.join(home_folder, "CB01_Downloads", self.file_name, self.media)
+        file_path = os.path.join(home_folder, "CB01_Downloads", self.file_name)
 
         # Salva tutti i segments.uri in una coda safe-thread
         for index, items in enumerate(self.playlist):
