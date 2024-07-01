@@ -43,8 +43,9 @@ class Split:
             header['Cookie'] = f'PHPSESSID={php_sessid}'
 
         #Stampa
+        """
         print("-")
         for range in headers_ranges:
             print(range)
-
+        """
         return headers_ranges
