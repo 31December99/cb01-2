@@ -52,7 +52,7 @@ async def start():
                                        proxy_group=proxy_group, php_sessid_group=php_sessid_group)
 
         # Passo tutto al downloader
-        video = Downloader(playlist=headers_ranges, file_name="Test3", media='VIDEO')
+        video = Downloader(playlist=headers_ranges)
         video.start()
         video.close()
 
