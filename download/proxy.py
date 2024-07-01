@@ -82,7 +82,7 @@ class Proxy(threading.Thread):
                                          proxies={'http': proxy_url, 'https': proxy_url}, timeout=30, verify=False)
 
             if response.status_code == 206:
-                print(f"[{threading.current_thread().name} {response.status_code}] -> {url} {proxy_url}")
+                print(f"[OK] -> {proxy_url} -> {url} ")
                 return response, filename
             else:
                 print(f"[{response.status_code}] {proxy_url} -> {url}")
