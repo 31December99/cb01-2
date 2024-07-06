@@ -60,7 +60,7 @@ class MyHttp:
 
     async def get(self, url: str, proxy=None) -> (str, str):
         response = await self.session.get(url=url, proxy=proxy)
-        # print(f"[cache {self.cache}] -> {url} [{response.status}]")
+        print(f"[Verifying] -> {url} [{response.status}]")
         if response.status == 200 and self.cache:
             body = await response.text()
             await self.memory_cache.set(url, body)
