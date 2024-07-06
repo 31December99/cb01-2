@@ -1,4 +1,12 @@
 # -*- coding: utf-8 -*-
+import requests
+
+import base64
+from PIL import Image
+import pytesseract
+from io import BytesIO
+
+import requests
 from bs4 import BeautifulSoup
 from sessions import MyHttp, Agent, Stayonline
 from urllib.parse import urlparse
@@ -24,7 +32,7 @@ class Page:
             return await my_http.get(url=url, proxy=proxy)
 
     async def get_home_urls(self) -> []:
-        home_body, _ = await self.get_url(url=self.page, headers=self.site_headers)
+        home_body, _ = await self.get_url(url=self.page, headers=self.site_headers, proxy="http://104.207.41.235:3128")
         soup = BeautifulSoup(home_body, 'html.parser')
         # Trova tutti gli elementi h3 con classe 'card-title'
         h3_elements = soup.find_all('h3', class_='card-title')
@@ -53,7 +61,74 @@ class Page:
         return best_url
 
     def mixdrop_url(self, stayonline_url: str) -> str:
+        # sudo apt-get install tesseract-ocr
+
         mixdrop_url = Stayonline.get_url(url=stayonline_url)
         parse_path = urlparse(mixdrop_url).path.split('/')[2]
         mixdrop_player_url = f"https://mixdrop.ag/e/{parse_path}"
         return mixdrop_player_url
+
+    # Maxstream
+    async def uprot_url(self, uprot_url: str) -> str:
+        # https://developers.cloudflare.com/fundamentals/reference/policies-compliances/cloudflare-cookies/
+        """
+        Cookie Name	Description
+        cf_clearance	Clearance Cookie stores the proof of challenge passed.
+                        It is used to no longer issue a challenge if present. It is required to reach an origin server.
+        """
+
+        html_source, _ = await self.get_url(url=uprot_url)
+        start_index = html_source.find('base64,') + len('base64,')
+        end_index = html_source.find('"', start_index)
+        img_base64 = html_source[start_index:end_index]
+        # Decodifica dell'immagine
+        img_data = base64.b64decode(img_base64)
+        img = Image.open(BytesIO(img_data))
+        # Utilizza pytesseract per estrarre il testo dall'immagine
+        text = pytesseract.image_to_string(img)
+        # Stampa il testo estratto
+
+
+        url = uprot_url  # Sostituisci con l'endpoint corretto di Cloudflare
+        headers = {
+            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0",
+            "Accept": "*/*",
+            "Accept-Language": "en-US,en;q=0.5",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Content-Type": "application/json",
+            "Origin": "https://uprot.net",  # Sostituisci con l'origin corretto
+            "Connection": "keep-alive",
+            "Referer": uprot_url,
+            "Sec-Fetch-Dest": "empty",
+            "Sec-Fetch-Mode": "cors",
+            "Sec-Fetch-Site": "same-origin",
+        }
+
+        # Formato payload (esempio)
+        payload = {
+            "number": text.strip(),
+        }
+
+        # Invia la richiesta POST
+        response = requests.post(url, headers=headers, json=payload)
+
+        # Stampa la risposta dal server
+        print(response.status_code)
+        #print(response.text)
+        cookies = response.cookies
+        phpsessid_value = ''
+        for cookie in cookies:
+            if cookie.name == 'PHPSESSID':
+                phpsessid_value = cookie.value
+                print(phpsessid_value)
+                break
+
+        cookies = {
+            "PHPSESSID": phpsessid_value
+        }
+
+        response = requests.post(url, headers=headers, cookies=cookies)
+
+        # Stampa la risposta dal server
+        print(response.status_code)
+        print(response.text)
