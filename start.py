@@ -24,12 +24,13 @@ async def start():
         mixdrop_player_url = page.mixdrop_url(stayonline_url=best_resolution_url)
         print(f"{mixdrop_player_url}...Attendi generazione dei link per il download")
 
-        proxy_group = ['http://104.207.52.23:3128', 'http://104.167.25.171:3128',
-                       'http://104.207.51.28:3128', 'http://104.167.26.142:3128',
-                       'http://104.167.26.202:3128', 'http://104.167.31.121:3128',
-                       'http://104.167.29.55:3128', 'http://104.207.36.135:3128',
-                       'http://104.167.31.88:3128', 'http://104.167.29.54:3128',
-                       None]  # None = Ip corrente
+        proxy_group = [
+            "http://104.207.62.172:3128", "http://104.207.41.235:3128",
+            "http://104.167.24.137:3128", "http://104.207.54.203:3128",
+            "http://104.167.27.29:3128", "http://104.207.49.183:3128",
+            "http://104.207.61.193:3128", "http://104.207.50.180:3128",
+            "http://104.207.43.169:3128", "http://104.207.46.168:3128",
+            None]  # None = Ip corrente
 
         download_group = []
         php_sessid_group = []
