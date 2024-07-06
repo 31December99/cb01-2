@@ -9,7 +9,7 @@ from download import Downloader
 async def start():
     # Scelgo la Pagina e ottengo tutti gli urls all'interno
     page_n = input("Scegli una pagina...[0-2300] ")
-    page = Page(page=f"https://cb01.church/page/{page_n}/")
+    page = Page(page=f"https://cb01.poker/page/{page_n}/")
     videos_home = await page.get_home_urls()
     for index, url in enumerate(videos_home):
         print(f"{index}) {url}")
