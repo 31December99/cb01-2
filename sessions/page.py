@@ -2,9 +2,10 @@
 import requests
 
 import base64
+"""
 from PIL import Image
 import pytesseract
-from io import BytesIO
+"""
 
 import requests
 from bs4 import BeautifulSoup
@@ -69,13 +70,9 @@ class Page:
         return mixdrop_player_url
 
     # Maxstream
+    """
     async def uprot_url(self, uprot_url: str) -> str:
         # https://developers.cloudflare.com/fundamentals/reference/policies-compliances/cloudflare-cookies/
-        """
-        Cookie Name	Description
-        cf_clearance	Clearance Cookie stores the proof of challenge passed.
-                        It is used to no longer issue a challenge if present. It is required to reach an origin server.
-        """
 
         html_source, _ = await self.get_url(url=uprot_url)
         start_index = html_source.find('base64,') + len('base64,')
@@ -132,3 +129,4 @@ class Page:
         # Stampa la risposta dal server
         print(response.status_code)
         print(response.text)
+    """
