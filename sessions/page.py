@@ -17,7 +17,7 @@ class Page:
 
     def __init__(self, page: str):
         self.page = page
-        self.site_headers = Agent.headers(host="cb01.church",
+        self.site_headers = Agent.headers(host="cb01.poker",
                                           refer='www.google.com',
                                           document='document', secfetchSite='none')
         self.filehost_headers = {
@@ -33,7 +33,7 @@ class Page:
             return await my_http.get(url=url, proxy=proxy)
 
     async def get_home_urls(self) -> []:
-        home_body, _ = await self.get_url(url=self.page, headers=self.site_headers, proxy="http://104.207.41.235:3128")
+        home_body, _ = await self.get_url(url=self.page, headers=self.site_headers)
         soup = BeautifulSoup(home_body, 'html.parser')
         # Trova tutti gli elementi h3 con classe 'card-title'
         h3_elements = soup.find_all('h3', class_='card-title')
