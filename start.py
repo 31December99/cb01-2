@@ -9,7 +9,7 @@ from download import Downloader
 async def start():
     # Scelgo la Pagina e ottengo tutti gli urls all'interno
     page_n = input("Scegli una pagina...[0-2300] ")
-    page = Page(page=f"https://cb01.poker/page/{page_n}/")
+    page = Page(page=f"https://cb01.coffee/page/{page_n}/")
     videos_home = await page.get_home_urls()
     for index, url in enumerate(videos_home):
         print(f"{index}) {url}")
@@ -25,11 +25,11 @@ async def start():
         print(f"{mixdrop_player_url}...Attendi generazione dei link per il download")
 
         proxy_group = [
-            "http://104.207.62.172:3128", "http://104.207.41.235:3128",
-            "http://104.167.24.137:3128", "http://104.207.54.203:3128",
-            "http://104.167.27.29:3128", "http://104.207.49.183:3128",
-            "http://104.207.61.193:3128", "http://104.207.50.180:3128",
-            "http://104.207.43.169:3128", "http://104.207.46.168:3128",
+            "http://104.167.27.91:3128", "http://104.167.30.3:3128",
+            "http://104.207.60.177:3128", "http://104.167.25.155:3128",
+            "http://104.207.44.246:3128", "http://104.207.43.1:3128",
+            "http://104.167.31.57:3128", "http://104.167.26.113:3128",
+            "http://104.167.30.27:3128", "http://104.207.36.234:3128",
             None]  # None = Ip corrente
 
         download_group = []
