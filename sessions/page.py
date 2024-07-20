@@ -17,7 +17,7 @@ class Page:
 
     def __init__(self, page: str):
         self.page = page
-        self.site_headers = Agent.headers(host="cb01.poker",
+        self.site_headers = Agent.headers(host="cb01.coffee",
                                           refer='www.google.com',
                                           document='document', secfetchSite='none')
         self.filehost_headers = {
